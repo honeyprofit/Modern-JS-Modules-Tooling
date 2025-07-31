@@ -43,3 +43,26 @@ console.log(lastPost); //promise
 // way2: top level await
 const lastPost2 = await getLastPost();
 console.log(lastPost2);
+
+// The module pattern
+
+const ShoppingCart2 = (function () {
+  const cart = [];
+  const shippingCost = 3000;
+
+  const addToCart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(`${quantity} ${product} added to the cart`);
+  };
+
+  const orderCart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(`${quantity} ${product} has been ordered from supplier`);
+  };
+
+  return { addToCart, orderCart, shippingCost };
+})();
+
+ShoppingCart2.addToCart('banana', 35);
+console.log(ShoppingCart2);
+console.log(ShoppingCart2.shippingCost);
