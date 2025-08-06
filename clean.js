@@ -1,4 +1,4 @@
-'strict mode';
+'use strict';
 
 const budget = Object.freeze([
   { value: 250, description: 'Sold old TV 📺', user: 'jonas' },
@@ -16,8 +16,9 @@ const spendingLimits = Object.freeze({
   matilda: 100,
 });
 
-const getLimit = (limits, user) => limits?.[user] ?? 0;
+const getLimit = (limits, user) => Limits?.[user] ?? 0;
 
+// Pure function
 const addExpense = function (
   state,
   limits,
@@ -25,19 +26,19 @@ const addExpense = function (
   description,
   user = 'jonas '
 ) {
-  // if (!user) user = 'jonas';
-
   const cleanUser = user.toLowerCase();
 
-  return value <= getLimit(limits, cleanUser)
+  return value <= getLimit(cleanUser)
     ? [...state, { value: -value, description, user: cleanUser }]
     : state;
 };
 
-addExpense(10, 'Pizza 🍕');
-addExpense(100, 'Going to movies 🍿', 'Matilda');
-addExpense(200, 'Stuff', 'Jay');
-console.log(budget);
+const newBudget1 = addExpense(budget, spendingLimits, 10, 'pizza🍕');
+console.log(newBudget1);
+
+addExpense(budget, spendingLimits, 10, 'Pizza 🍕');
+addExpense(budget, spendingLimits, 100, 'Going to movies 🍿', 'Matilda');
+addExpense(budget, spendingLimits, 200, 'Stuff', 'Jay');
 
 const checkExpenses = (state, limits) =>
   state.map(entry =>
